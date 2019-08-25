@@ -12,6 +12,10 @@ server.post('/projects', (req, res) => {
   projects.push({ id, title, tasks: [] });
 
   return res.json(projects);
-})
+});
+
+server.get('/projects', (req, res) => {
+  return res.json(projects);
+});
 
 server.listen(3001);
