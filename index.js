@@ -6,6 +6,20 @@ server.use(express.json());
 
 const projects = [];
 
+function checkProjectInArray(req, res, next) {
+  const position = projects.findIndex(proj => proj.id === req.params.id);
+  const project = projects[position];
+  if (!project) {
+    return res.status(400).json({
+      error: 'Project not exist'
+    });
+  }
+
+  req.position = position;
+
+  return next();
+}
+
 server.post('/projects', (req, res) => {
   const { id, title } = req.body;
 
@@ -14,12 +28,10 @@ server.post('/projects', (req, res) => {
   return res.json(projects);
 });
 
-server.post('/projects/:id/tasks', (req, res) => {
-  const { id } = req.params;
+server.post('/projects/:id/tasks', checkProjectInArray, (req, res) => {
   const { title } = req.body;
 
-  const pos = projects.findIndex(proj => proj.id === id);
-  projects[pos].tasks.push(title);
+  projects[req.position].tasks.push(title);
 
   return res.json(projects);
 });
@@ -28,21 +40,16 @@ server.get('/projects', (req, res) => {
   return res.json(projects);
 });
 
-server.put('/projects/:id', (req, res) => {
-  const { id } = req.params;
+server.put('/projects/:id', checkProjectInArray, (req, res) => {
   const { title } = req.body;
 
-  const pos = projects.findIndex(proj => proj.id === id);
-  projects[pos].title = title;
+  projects[req.position].title = title;
 
   return res.json(projects);
 });
 
-server.delete('/projects/:id', (req, res) => {
-  const { id } = req.params;
-
-  const pos = projects.findIndex(proj => proj.id === id);
-  projects.splice(pos, 1);
+server.delete('/projects/:id', checkProjectInArray, (req, res) => {
+  projects.splice(req.position, 1);
 
   return res.json(projects);
 });
