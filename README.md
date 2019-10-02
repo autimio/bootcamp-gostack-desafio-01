@@ -3,7 +3,7 @@
 Desenvolvimento de uma simples aplicação utilizando Express.
 Este projeto foi feito devido a um desafio dentro de um treinamento de bootcamp na [@Rockeseat](https://github.com/Rocketseat).
 
-Essa aplicação será utilizada para armazenar projetos e tarefas.
+Essa aplicação não segue as regras de estrutura de um projeto real, é um [código espaguete](https://pt.wikipedia.org/wiki/C%C3%B3digo_espaguete) e terá como objetivo o armazenamento de projetos e tarefas em tempo de execução, somente.
 
 ## Rotas
 
